@@ -8,6 +8,7 @@ class WebshopApplicationTests {
 
 	@Test
 	void contextLoads() {
+		String test = "";
 	}
 
 }
