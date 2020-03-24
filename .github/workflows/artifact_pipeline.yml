@@ -20,7 +20,7 @@ jobs:
        uses: actions/setup-java@v1
        with:
          java-version: 13
-     - run: mvn -f clean compile
+     - run: mvn clean compile
        
   build:
     runs-on: ubuntu-latest
