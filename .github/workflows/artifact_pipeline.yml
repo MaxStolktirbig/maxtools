@@ -26,6 +26,3 @@ jobs:
 
     - name: Maven Verify
       run: mvn -B clean verify
-
-    - name: Upload maven package
-      uses: actions/upload-artifact@v1
