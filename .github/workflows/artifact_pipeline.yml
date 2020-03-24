@@ -4,6 +4,7 @@ name: artifact CI
 
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the master branch
+# events but only for the master branch
 on:
   push:
     branches: 
@@ -22,3 +23,9 @@ jobs:
         java-version: 1.8
     - name: Build with Maven
       run: mvn -B package --file pom.xml
+
+    - name: Maven Verify
+      run: mvn -B clean verify
+
+    - name: Upload maven package
+      uses: actions/upload-artifact@v1
