@@ -43,4 +43,4 @@ jobs:
     needs: [verify]
     name: Deploy to repo
     steps:
-      - run: mvn clean --settings settings.xml deploy --file pom.xml
+      - run: mvn --settings settings.xml --file pom.xml clean deploy
