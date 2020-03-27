@@ -46,4 +46,11 @@
 		</plugins>
 	</build>
 
+	<distributionManagement>
+		<repository>
+			<id>github</id>
+			<name>GitHub IAC2020 Apache Maven Packages</name>
+			<url>https://maven.pkg.github.com/maxstolktirbig/IAC2020</url>
+		</repository>
+	</distributionManagement>
 </project>
