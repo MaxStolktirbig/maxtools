@@ -8,7 +8,7 @@ name: Master Build
 on:
   push:
     branches: 
-      - master
+      [master, development]
 
 jobs:
   
