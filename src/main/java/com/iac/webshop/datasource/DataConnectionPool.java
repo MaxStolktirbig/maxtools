@@ -14,12 +14,11 @@ public class DataConnectionPool {
     private static List<Connection> openConnections;
     private static List<Connection> usedConnections = new ArrayList<>();
     private int INITIAL_POOL_SIZE = 10;
-    int rport = 3306;
-    String dbuserName = "iac";
-    String dbpassword = "I@c202020";
-    String url = "jdbc:mysql://localhost:" + rport;
-    String driverName = "com.mysql.cj.jdbc.Driver";
-    Connection conn = null;
+    private String dbuserName = "iac";
+    private String dbpassword = "I@c202020";
+    private String url = "jdbc:mysql://localhost:3306";
+    private String driverName = "com.mysql.cj.jdbc.Driver";
+   private  Connection conn = null;
 
     private DataConnectionPool(){
         if(INSTANCE == null) {
@@ -72,7 +71,6 @@ public class DataConnectionPool {
     public static DataConnectionPool getInstance(){
         return INSTANCE;
     }
-
 }
 
 
