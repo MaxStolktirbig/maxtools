@@ -26,4 +26,4 @@ jobs:
     runs-on: [ubuntu-latest]
     name: Deploy to repo
     steps:
-      - run: mvn -B package --file -pom.xml
+      - run: mvn -B package --file pom.xml
