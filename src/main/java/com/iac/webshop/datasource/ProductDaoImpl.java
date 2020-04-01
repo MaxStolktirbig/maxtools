@@ -34,13 +34,13 @@ public class ProductDaoImpl implements ProductDao {
         return query("select * from product", "products");
     }
     public JSONObject getProduct(int productId){
-        return query("select * from product where product_id = "+productId, "product");
+        return query("select * from product where productId = "+productId, "product");
     }
     public JSONObject getCategories() {
         return query("select * from category", "categories");
     }
     public JSONObject getProductIdByCategory(int categoryId) {
-        return query("select product_id from product where category_id = "+ categoryId, "categoryProducts");
+        return query("select productId from product where categoryId = "+ categoryId, "categoryProducts");
     }
 
     public JSONObject getDiscounts(){
