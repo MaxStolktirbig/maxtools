@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api")
 public class ProductController {
-    private static ProductDao productDao = new ProductDaoImpl();
+    private static ProductDaoImpl productDao = new ProductDaoImpl();
     @GetMapping("/products")
     public String getProducts(){
         return productDao.getProducts().toString();
@@ -38,7 +38,7 @@ public class ProductController {
     }
 
     @GetMapping("/discounts/{productId}")
-    public String getDiscountsByProduct(@PathVariable int productId){
+    public String getDiscountByProduct(@PathVariable int productId){
         return productDao.getDiscountByProduct(productId).toString();
     }
 
