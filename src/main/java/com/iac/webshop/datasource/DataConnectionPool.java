@@ -35,16 +35,23 @@ public class DataConnectionPool {
         try {
             //mysql database connectivity
             Class.forName(driverName);
+            long totaltime = System.currentTimeMillis();
+            System.out.println("[INFO] Starting connection pool");
             for(int i = 0; i< INITIAL_POOL_SIZE; i++) {
+                long time = System.currentTimeMillis();
                 conn = DriverManager.getConnection(url, user, password);
-                System.out.println("[INFO] Database connection established (id = "+i+")");
-                System.out.println("[DONE]");
+                System.out.println("[INFO] Database connection established " +
+                        "("+i+" of "+(INITIAL_POOL_SIZE-1)+") " +
+                        "["+(System.currentTimeMillis()-time)+"ms]");
                 pool.add(conn);
             }
+            System.out.println("[DONE] "+(System.currentTimeMillis()-totaltime)+"ms");
             return pool;
         } catch (Exception e) {
-            System.out.println("Couldn't make a connection!");
+            System.out.println("[ERROR] Couldn't make a connection!");
+            System.out.println("[STACKTRACE]");
             e.printStackTrace();
+            System.out.println("[STACKTRACE]");
             return null;
         }
     }
@@ -67,7 +74,10 @@ public class DataConnectionPool {
             usedConnections.remove(connection);
             return true;
         } catch (Exception e){
-            System.out.println("An error has occurred while trying to release a connection!");
+            System.out.println("[ERROR] An error has occurred while trying to release a connection!");
+            System.out.println("[STACKTRACE]");
+            e.printStackTrace();
+            System.out.println("[STACKTRACE]");
             return false;
         }
     }
