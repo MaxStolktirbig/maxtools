@@ -12,7 +12,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebMvcTest(ProductController.class)
-class WebshopApplicationTests {
+class ProductTests {
 	@Autowired
 	private MockMvc mvc;
 
