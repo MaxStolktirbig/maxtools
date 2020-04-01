@@ -22,8 +22,9 @@ public class ProductDaoImpl implements ProductDao {
             Connection connection = dataConnectionPool.getConnection();
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
+            JSONObject returnJSON = dataTool.convertToJSON(resultSet, description);
             dataConnectionPool.releaseConnection(connection);
-            return dataTool.convertToJSON(resultSet, description);
+            return returnJSON;
         } catch (Exception e){
             e.printStackTrace();
             return null;
@@ -48,10 +49,10 @@ public class ProductDaoImpl implements ProductDao {
     }
 
     public JSONObject getDiscountByProduct(int productId){
-        return query("select * from discount where productId = "+productId, "discount by product");
+        return query("select * from discount where productId = "+productId, "discount-by-product");
     }
 
     public JSONObject getProductByDiscount(int discountId){
-        return query("select * from product p, discount d where d.productid = p.productid and d.discountid = "+discountId, "product by discount");
+        return query("select * from product p, discount d where d.productid = p.productid and d.discountid = "+discountId, "product-by-discount");
     }
 }

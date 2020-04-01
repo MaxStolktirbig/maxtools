@@ -16,7 +16,7 @@ public class DataConnectionPool {
     private int INITIAL_POOL_SIZE = 10;
     private String dbuserName = "iac";
     private String dbpassword = "I@c202020";
-    private String url = "jdbc:mysql://localhost:3306/prouductService" +
+    private String url = "jdbc:mysql://85.214.169.10:3306/prouductService" +
             "?useUnicode=true&" +
             "useJDBCCompliantTimezoneShift=true&" +
             "useLegacyDatetimeCode=false&" +
@@ -40,9 +40,9 @@ public class DataConnectionPool {
             for(int i = 0; i< INITIAL_POOL_SIZE; i++) {
                 long time = System.currentTimeMillis();
                 conn = DriverManager.getConnection(url, user, password);
-                System.out.println("[INFO] Database connection established " +
-                        "("+i+" of "+(INITIAL_POOL_SIZE-1)+") " +
-                        "["+(System.currentTimeMillis()-time)+"ms]");
+                System.out.println("[CREATE] CONNECTION " +
+                        (i+1)+" of "+INITIAL_POOL_SIZE +
+                        " ["+(System.currentTimeMillis()-time)+"ms]");
                 pool.add(conn);
             }
             System.out.println("[DONE] "+(System.currentTimeMillis()-totaltime)+"ms");
