@@ -16,7 +16,7 @@ public class DataConnectionPool {
     private int INITIAL_POOL_SIZE = 10;
     private String dbuserName = "iac";
     private String dbpassword = "I@c202020";
-    private String url = "jdbc:mysql://localhost:3306";
+    private String url = "jdbc:mysql://localhost:3306/prouductService";
     private String driverName = "com.mysql.cj.jdbc.Driver";
    private  Connection conn = null;
 
