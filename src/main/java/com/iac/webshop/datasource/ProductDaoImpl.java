@@ -31,15 +31,27 @@ public class ProductDaoImpl implements ProductDao {
     }
 
     public JSONObject getProducts(){
-        return query("select * from products", "products");
+        return query("select * from product", "products");
     }
     public JSONObject getProduct(int productId){
-        return query("select * from products where product_id = "+productId, "product");
+        return query("select * from product where product_id = "+productId, "product");
     }
     public JSONObject getCategories() {
-        return query("select * from categories", "categories");
+        return query("select * from category", "categories");
     }
     public JSONObject getProductIdByCategory(int categoryId) {
-        return query("select product_id from products where category_id = "+ categoryId, "categoryProducts");
+        return query("select product_id from product where category_id = "+ categoryId, "categoryProducts");
+    }
+
+    public JSONObject getDiscounts(){
+        return query("select * from discount", "discounts");
+    }
+
+    public JSONObject getDiscountByProduct(int productId){
+        return query("select * from discount where productId = "+productId, "discount by product");
+    }
+
+    public JSONObject getProductByDiscount(int discountId){
+        return query("select * from product p, discount d where d.productid = p.productid and d.discountid = "+discountId, "product by discount");
     }
 }

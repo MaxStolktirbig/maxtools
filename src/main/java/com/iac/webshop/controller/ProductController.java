@@ -26,4 +26,20 @@ public class ProductController {
     public String getProductByCategory(@PathVariable int categoryId){
         return productDao.getProductIdByCategory(categoryId).toString();
     }
+
+    @GetMapping("/discounts")
+    public String getDiscounts(){
+        return productDao.getDiscounts().toString();
+    }
+
+    @GetMapping("/discounts/products/{discountId}")
+    public String getProductByDiscount(@PathVariable int discountId){
+        return productDao.getProductByDiscount(discountId).toString();
+    }
+
+    @GetMapping("/discounts/{productId}")
+    public String getDiscountsByProduct(@PathVariable int productId){
+        return productDao.getDiscountByProduct(productId).toString();
+    }
+
 }

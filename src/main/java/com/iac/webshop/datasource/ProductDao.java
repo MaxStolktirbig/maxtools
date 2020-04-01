@@ -8,4 +8,7 @@ public interface ProductDao {
     JSONObject getProduct(int productId);
     JSONObject getCategories();
     JSONObject getProductIdByCategory(int categoryId);
+    JSONObject getDiscounts();
+    JSONObject getDiscountByProduct(int productId);
+    JSONObject getProductByDiscount(int discountId);
 }

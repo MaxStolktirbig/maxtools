@@ -37,7 +37,7 @@ public class DataConnectionPool {
             Class.forName(driverName);
             for(int i = 0; i< INITIAL_POOL_SIZE; i++) {
                 conn = DriverManager.getConnection(url, user, password);
-                System.out.println("Database connection established (id = "+i+")");
+                System.out.println("[INFO] Database connection established (id = "+i+")");
                 System.out.println("[DONE]");
                 pool.add(conn);
             }
