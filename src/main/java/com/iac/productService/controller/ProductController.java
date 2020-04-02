@@ -1,6 +1,5 @@
-package com.iac.webshop.controller;
-import com.iac.webshop.datasource.ProductDao;
-import com.iac.webshop.datasource.ProductDaoImpl;
+package com.iac.productService.controller;
+import com.iac.productService.datasource.ProductDaoImpl;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
