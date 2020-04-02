@@ -1,4 +1,4 @@
-package com.iac.webshop.datatools;
+package com.iac.productService.datatools;
 
 import org.json.JSONArray;
 import org.json.JSONObject;

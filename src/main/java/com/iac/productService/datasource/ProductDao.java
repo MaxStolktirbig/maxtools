@@ -1,4 +1,4 @@
-package com.iac.webshop.datasource;
+package com.iac.productService.datasource;
 
 import org.json.JSONObject;
 

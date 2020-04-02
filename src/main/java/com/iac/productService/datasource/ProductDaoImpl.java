@@ -1,14 +1,9 @@
-package com.iac.webshop.datasource;
+package com.iac.productService.datasource;
 
-import com.iac.webshop.datatools.DataTool;
+import com.iac.productService.datatools.DataTool;
 
-import com.iac.webshop.datatools.DataTool;
-import org.json.JSONArray;
 import org.json.JSONObject;
 
-import javax.json.Json;
-import javax.json.JsonObject;
-import javax.json.JsonObjectBuilder;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
