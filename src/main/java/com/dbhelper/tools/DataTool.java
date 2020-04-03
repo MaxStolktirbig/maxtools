@@ -1,4 +1,4 @@
-package com.iac.productService.datatools;
+package com.dbhelper.tools;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
