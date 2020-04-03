@@ -25,4 +25,4 @@ jobs:
     - name: Build with Maven
       run: mvn -B package --file pom.xml
     - name: deploy to repo
-      run: mvn deploy -Dregistry=https://maven.pkg.github.com/MaxStolktirbig -Dtoken=GH_TOKEN
+      run: mvn deploy
