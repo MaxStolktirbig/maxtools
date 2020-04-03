@@ -14,12 +14,12 @@ public class DataTool {
         JSONArray jsonArray = new JSONArray();
         while (resultSet.next()) {
             int total_rows = resultSet.getMetaData().getColumnCount();
+            JSONObject obj = new JSONObject();
             for (int i = 0; i < total_rows; i++) {
-                JSONObject obj = new JSONObject();
                 obj.put(resultSet.getMetaData().getColumnLabel(i + 1)
                         .toLowerCase(), resultSet.getObject(i + 1));
-                jsonArray.put(obj);
             }
+            jsonArray.put(obj);
         }
         returnObject.put(description, jsonArray);
         return returnObject;
