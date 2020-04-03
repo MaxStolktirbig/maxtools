@@ -1,13 +1,13 @@
-package com.iac.productService;
+package com.dbhelper.tools;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class WebshopApplication {
+public class SpringApp {
 
 	public static void main(String[] args) {
-		SpringApplication.run(WebshopApplication.class, args);
+		SpringApplication.run(SpringApp.class, args);
 	}
 
 }

@@ -1,4 +1,4 @@
-package com.iac.productService.datasource;
+package com.dbhelper.tools;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -6,26 +6,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DataConnectionPool {
-    private static final DataConnectionPool INSTANCE = new DataConnectionPool();
     private static List<Connection> openConnections;
     private static List<Connection> usedConnections = new ArrayList<>();
     private int INITIAL_POOL_SIZE = 10;
-    private String dbuserName = "iac";
-    private String dbpassword = "I@c202020";
-    private String service = "prouductService";
-    private String url = "jdbc:mysql://85.214.169.10:3306/"
-            +service+
-            "?useUnicode=true&" +
-            "useJDBCCompliantTimezoneShift=true&" +
-            "useLegacyDatetimeCode=false&" +
-            "serverTimezone=UTC";
-    private String driverName = "com.mysql.cj.jdbc.Driver";
-   private  Connection conn = null;
+    private String driverName;
+    private  Connection conn = null;
 
-    public DataConnectionPool(){
-        if(INSTANCE == null) {
-            openConnections = createConnection(url, dbuserName, dbpassword);
-        }
+    public DataConnectionPool(String driverName, String url, String dbuserName, String dbpassword, int INITIAL_POOL_SIZE){
+        this.driverName = driverName;
+        this.INITIAL_POOL_SIZE = INITIAL_POOL_SIZE;
+        openConnections = createConnection(url, dbuserName, dbpassword);
+    }
+    public DataConnectionPool(String driverName, String url, String dbuserName, String dbpassword){
+        this.driverName = driverName;
+        openConnections = createConnection(url, dbuserName, dbpassword);
     }
 
     private List<Connection> createConnection(String url, String user, String password) {
@@ -80,9 +74,6 @@ public class DataConnectionPool {
         }
     }
 
-    public static DataConnectionPool getInstance(){
-        return INSTANCE;
-    }
 }
 
 
