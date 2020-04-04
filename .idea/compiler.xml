@@ -15,7 +15,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="maxtools" options="-parameters" />
+      <module name="maxtools" options="" />
     </option>
   </component>
 </project>

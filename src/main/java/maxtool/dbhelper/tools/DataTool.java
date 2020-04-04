@@ -1,4 +1,4 @@
-package com.dbhelper.tools;
+package maxtool.dbhelper.tools;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
