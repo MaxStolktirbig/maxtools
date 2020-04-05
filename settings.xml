@@ -31,8 +31,7 @@
         <server>
             <id>github</id>
             <username>x-accesss-token</username>
-            <!--<password>${env.GITHUB_TOKEN}</password>-->
-            <password>dc9683bcd43173a1918ddcc8849e1314aced6bed</password>
+            <password>${env.GITHUB_TOKEN}</password>
         </server>
     </servers>
 </settings>
