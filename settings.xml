@@ -21,7 +21,7 @@
                 <repository>
                     <id>github</id>
                     <name>GitHub IAC2020 Apache Maven Packages</name>
-                    <url>https://maven.pkg.github.com/maxstolktirbig/IAC2020</url>
+                    <url>https://maven.pkg.github.com/maxstolktirbig/maxtools</url>
                 </repository>
             </repositories>
         </profile>
@@ -31,7 +31,8 @@
         <server>
             <id>github</id>
             <username>x-accesss-token</username>
-            <password>0a1063609d17fc39265fad3516624a70a11c89b8</password>
+            <!--<password>${env.GITHUB_TOKEN}</password>-->
+            <password>dc9683bcd43173a1918ddcc8849e1314aced6bed</password>
         </server>
     </servers>
 </settings>
