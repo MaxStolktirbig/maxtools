@@ -27,4 +27,4 @@ jobs:
     - name: Deploy to repo
       env:
         GITHUB_TOKEN: ${{ secrets.TOKEN }}
-      run: mvn --settings -settings.xml deploy
+      run: mvn --settings settings.xml deploy
