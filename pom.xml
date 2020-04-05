@@ -15,11 +15,7 @@
 	</properties>
 
 	<dependencies>
-		<dependency>
-			<groupId>javax.json</groupId>
-			<artifactId>javax.json-api</artifactId>
-			<version>1.0</version>
-		</dependency>
+
 		<dependency>
 			<groupId>org.json</groupId>
 			<artifactId>json</artifactId>
@@ -66,7 +62,7 @@
 			<artifactId>ngdbc</artifactId>
 			<version>2.4.70</version>
 			<type>pom</type>
-			<scope>test</scope>
+			<scope>com.iac.webshop.test</scope>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/com.ibm.informix/jdbc -->
 		<dependency>
@@ -85,21 +81,21 @@
 			<groupId>org.hsqldb</groupId>
 			<artifactId>hsqldb</artifactId>
 			<version>2.3.2</version>
-			<scope>test</scope>
+			<scope>com.iac.webshop.test</scope>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/com.h2database/h2 -->
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 			<version>1.4.200</version>
-			<scope>test</scope>
+			<scope>com.iac.webshop.test</scope>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.apache.derby/derby -->
 		<dependency>
 			<groupId>org.apache.derby</groupId>
 			<artifactId>derby</artifactId>
 			<version>10.15.2.0</version>
-			<scope>test</scope>
+			<scope>com.iac.webshop.test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
