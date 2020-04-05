@@ -1,4 +1,6 @@
-package maxtool.dbhelper.tools.dbconnection;
+package maxtool.helper.tools.dbconnection;
+
+import maxtool.helper.tools.SystemMessage;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -13,80 +15,104 @@ public class DataConnectionPool {
 
     public DataConnectionPool(String urlNoPrefix, String dbuserName, String dbpassword, ConnectionType connectionType, int INITIAL_POOL_SIZE){
         this.INITIAL_POOL_SIZE = INITIAL_POOL_SIZE;
-        String url = setDriverName(connectionType)+ urlNoPrefix;
-        openConnections = createConnection(url, dbuserName, dbpassword);
+        openConnections = createConnection(urlNoPrefix, dbuserName, dbpassword, connectionType);
     }
     public DataConnectionPool(String urlNoPrefix, String dbuserName, String dbpassword, ConnectionType connectionType){
-        String url = setDriverName(connectionType)+urlNoPrefix;
-        openConnections = createConnection(url, dbuserName, dbpassword);
+        openConnections = createConnection(urlNoPrefix, dbuserName, dbpassword, connectionType);
     }
 
-    private List<Connection> createConnection(String url, String user, String password) {
+    private List<Connection> createConnection(String urlNoPrefix, String user, String password, ConnectionType connectionType) {
         List<Connection> pool = new ArrayList<>(INITIAL_POOL_SIZE);
         try {
+            String baseUrl = urlNoPrefix;
+            String url = setDriverName(connectionType)+ baseUrl;
             //mysql database connectivity
             Class.forName(driverName);
             long totaltime = System.currentTimeMillis();
-            System.out.println("[INFO] Starting connection pool for: " +
-                    "\n[INFO] url="+url+
-                    "\n[INFO] uname="+user+
-                    "\n[INFO] password="+password);
+            SystemMessage.infoMessage("Starting connection pool for: ");
+            SystemMessage.infoMessage("database="+urlNoPrefix.split("\\?")[0].split("/")[1]);
             for(int i = 0; i< INITIAL_POOL_SIZE; i++) {
                 long time = System.currentTimeMillis();
                 conn = DriverManager.getConnection(url, user, password);
                 pool.add(conn);
-                System.out.println("[CONNECTION] " +
-                        (i+1)+" of "+INITIAL_POOL_SIZE +
+                SystemMessage.connectionMessage((i+1)+" of "+INITIAL_POOL_SIZE +
                         " ["+(System.currentTimeMillis()-time)+"ms]");
             }
-            System.out.println("[DONE] "+(System.currentTimeMillis()-totaltime)+"ms");
+            SystemMessage.finishedTaskMessage("----------------------------------------");
+            SystemMessage.finishedTaskMessage("Total time:"+((System.currentTimeMillis()-totaltime)/1000)+"s");
+            SystemMessage.finishedTaskMessage("----------------------------------------");
             return pool;
         } catch (Exception e) {
-            System.out.println("[ERROR] Couldn't make a connection!");
-            System.out.println("[STACKTRACE]");
-            e.printStackTrace();
-            System.out.println("[STACKTRACE]");
+            SystemMessage.errorMessage("Couldn't make a connection");
+            SystemMessage.exceptionMessage(e);
             return null;
         }
     }
 
-    private Connection getConnection() {
+    public Connection getConnection() {
         try {
             Connection connection = openConnections.get(openConnections.size() - 1);
             usedConnections.add(connection);
             openConnections.remove(connection);
             return connection;
         }catch (Exception e){
-            System.out.println("[ERROR] An error has occurred while trying to get a connection!");
-            System.out.println("[STACKTRACE]");
-            e.printStackTrace();
-            System.out.println("[STACKTRACE]");
+            SystemMessage.errorMessage("An error has occurred while trying to get a connection");
+            SystemMessage.exceptionMessage(e);
             return null;
         }
     }
 
     private void releaseConnection(Connection connection) {
         try {
-            openConnections.add(connection);
-            usedConnections.remove(connection);
+            if(usedConnections.contains(connection)) {
+                openConnections.add(connection);
+                usedConnections.remove(connection);
+            } else if(openConnections.contains(connection)) {
+                SystemMessage.warningMessage("Connection not used!");
+            } else{
+                SystemMessage.warningMessage("Connection not from this pool");
+                SystemMessage.infoMessage("Use dataConnectionPool.getConnection()");
+            }
         } catch (Exception e){
-            System.out.println("[ERROR] An error has occurred while trying to release a connection!");
-            System.out.println("[STACKTRACE]");
-            e.printStackTrace();
-            System.out.println("[STACKTRACE]");
+            SystemMessage.errorMessage("An error has occurred while trying to release a connection");
+            SystemMessage.exceptionMessage(e);
         }
     }
 
-    public ResultSet executeQuery(PreparedStatement preparedStatement){
+    public ResultSet executeQuery(PreparedStatement preparedStatement, Connection connection){
         ResultSet resultSet = null;
         try {
-            Connection connection = getConnection();
             resultSet = preparedStatement.executeQuery();
             releaseConnection(connection);
             return resultSet;
-        } catch (NullPointerException | SQLException e){
+        }
+        catch (NullPointerException | SQLException e){
             e.printStackTrace();
             return resultSet;
+        }
+    }
+
+    public void execute(PreparedStatement preparedStatement, Connection connection){
+        try {
+            preparedStatement.execute();
+            releaseConnection(connection);
+        } catch (NullPointerException | SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    public List<Integer> getGeneratedKeys(PreparedStatement preparedStatement, Connection connection){
+        try {
+            preparedStatement.execute();
+            ResultSet resultSet = preparedStatement.getGeneratedKeys();
+            List<Integer> keys = new ArrayList<>();
+            while(resultSet.next()) {
+                keys.add(resultSet.getInt(1));
+            }
+            return keys;
+        }catch (NullPointerException|SQLException e){
+            e.printStackTrace();
+            return null;
         }
     }
     private String setDriverName(ConnectionType connectionType){

@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>maxtool.dbhelper</groupId>
 	<artifactId>tools</artifactId>
-	<version>0.0.7</version>
+	<version>0.0.11-RELEASE</version>
 	<name>Database Helper Tools</name>
 	<description>Tools for a frequent usage of the database</description>
 
@@ -100,6 +100,11 @@
 			<artifactId>derby</artifactId>
 			<version>10.15.2.0</version>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+			<version>5.2.5.RELEASE</version>
 		</dependency>
 	</dependencies>
 

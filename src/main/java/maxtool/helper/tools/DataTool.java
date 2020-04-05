@@ -1,15 +1,16 @@
-package maxtool.dbhelper.tools;
+package maxtool.helper.tools;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class DataTool {
     //edit from http://biercoff.com/nice-and-simple-converter-of-java-resultset-into-jsonarray-or-xml/
 
     public static JSONObject convertToJSON(ResultSet resultSet, String description)
-            throws Exception {
+            throws SQLException {
         JSONObject returnObject = new JSONObject();
         JSONArray jsonArray = new JSONArray();
         while (resultSet.next()) {
