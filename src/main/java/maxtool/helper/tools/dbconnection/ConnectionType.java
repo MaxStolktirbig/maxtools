@@ -1,4 +1,4 @@
-package maxtool.dbhelper.tools.dbconnection;
+package maxtool.helper.tools.dbconnection;
 
 public enum ConnectionType {
     MYSQL,
