@@ -1,7 +1,7 @@
-package maxtool.helper.tools.IAC2020;
+package mx.helper.tools.IAC2020;
 
-import maxtool.helper.tools.SystemMessage;
-import maxtool.helper.tools.IAC2020.security.models.JWTToken;
+import mx.helper.tools.SystemMessage;
+import mx.helper.tools.IAC2020.security.models.JWTToken;
 import org.json.JSONObject;
 import org.springframework.http.ResponseEntity;
 
