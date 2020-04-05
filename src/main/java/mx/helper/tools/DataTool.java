@@ -1,4 +1,4 @@
-package maxtool.helper.tools;
+package mx.helper.tools;
 
 import org.json.JSONArray;
 import org.json.JSONObject;

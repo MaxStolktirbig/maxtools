@@ -1,6 +1,6 @@
-package maxtool.helper.tools.dbconnection;
+package mx.helper.tools.dbconnection;
 
-import maxtool.helper.tools.SystemMessage;
+import mx.helper.tools.SystemMessage;
 
 import java.sql.*;
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package maxtool.helper.tools;
+package mx.helper.tools;
 
 public final class SystemMessage {
     private static final String ANSI_RESET = "\u001B[0m";
