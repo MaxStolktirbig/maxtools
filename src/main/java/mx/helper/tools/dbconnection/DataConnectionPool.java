@@ -57,12 +57,14 @@ public class DataConnectionPool {
 
     public Connection getConnection() {
         try {
-            if (openConnections.size()>1) {
-                Connection connection = openConnections.get(openConnections.size() - 1);
-                usedConnections.add(connection);
-                openConnections.remove(connection);
-                return connection;
+            while(openConnections.size() < 1){
+
             }
+            Connection connection = openConnections.get(openConnections.size() - 1);
+            usedConnections.add(connection);
+            openConnections.remove(connection);
+            return connection;
+
         }catch (Exception e){
             SystemMessage.errorMessage("An error has occurred while trying to get a connection");
             SystemMessage.exceptionMessage(e);

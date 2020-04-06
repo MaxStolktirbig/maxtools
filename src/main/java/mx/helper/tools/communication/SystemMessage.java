@@ -28,7 +28,7 @@ public final class SystemMessage {
         if(stacktraceEnabled){
             warningMessage("It is recommended to disable stacktrace for live environments, " +
                     "you can always see the stacktrace in the logs");
-            System.out.println("[" + ANSI_RED + "STACKTRACE" + ANSI_RESET + "] "+e.getClass().toString()+":");
+            System.out.println("[" + ANSI_RED + "STACKTRACE" + ANSI_RESET + "] "+e.getClass().toString()+": "+e.getMessage());
             StackTraceElement[] stackTraceElements = e.getStackTrace();
             for(StackTraceElement element: stackTraceElements){
                 System.out.println("[" + ANSI_RED + "STACKTRACE" + ANSI_RESET + "] \t\t"+element.toString());

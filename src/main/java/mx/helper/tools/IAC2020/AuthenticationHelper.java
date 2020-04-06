@@ -12,12 +12,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class AuthenticationHelper {
-    public boolean stacktraceEnabled = false;
-    public String authUrl;
+    public static String authUrl;
+    public static String loginUrl;
+    public static String validateUrl;
 
-    public boolean validateToken(JWTToken jwt, String url){
+    public boolean validateToken(JWTToken jwt){
         try{
-            URL obj = new URL(url);
+            URL obj = new URL(validateUrl);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
             con.setRequestProperty("Authorization", "Bearer " + jwt.getJwtToken());
             if(con.getResponseCode() == 200){
@@ -25,19 +26,17 @@ public class AuthenticationHelper {
             }
         }catch (IOException e){
             SystemMessage.errorMessage("Malformed URL, check authentication url");
-            if(stacktraceEnabled){
-                SystemMessage.exceptionMessage(e);
-            }
+            SystemMessage.exceptionMessage(e);
         }
         return false;
     }
 
 //    https://www.chillyfacts.com/java-send-http-getpost-request-and-read-json-response/
-    public Map<String,Object> getClaimsFromToken(JWTToken jwt, String url){
+    public Map<String,Object> getClaimsFromToken(JWTToken jwt){
         Map<String,Object> map = new HashMap<>();
         map.put("responseCode",null);
         try{
-            URL obj = new URL(url);
+            URL obj = new URL(authUrl);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 
             con.setRequestProperty("Authorization", "Bearer "+ jwt.getJwtToken());
@@ -62,24 +61,22 @@ public class AuthenticationHelper {
             map.put("Role",myResponse.get("Role"));
             return map;
         }catch (IOException e){
-            if(stacktraceEnabled){
-                SystemMessage.exceptionMessage(e);
-            }
+            SystemMessage.exceptionMessage(e);
             return map;
         }
     }
 
-    public String getRole(JWTToken jwtToken, String url){
+    public String getRole(JWTToken jwtToken){
         String role = null;
-        if(getClaimsFromToken(jwtToken, url).get("Role") != null){
-            role = (String) getClaimsFromToken(jwtToken, url).get("Role");
+        if(getClaimsFromToken(jwtToken).get("Role") != null){
+            role = (String) getClaimsFromToken(jwtToken).get("Role");
         }
         return role;
     }
 
-    public ResponseEntity adminCheck(JWTToken jwtToken, String url, Object responseBody){
-        if(jwtToken.getJwtToken() != null && validateToken(jwtToken, url)) {
-            String role = getRole(jwtToken, url);
+    public ResponseEntity adminCheck(JWTToken jwtToken, String responseBody){
+        if(jwtToken.getJwtToken() != null && validateToken(jwtToken)) {
+            String role = getRole(jwtToken);
             if(role != null) {
                 if (role.equals("admin")) {
                     return ResponseEntity.ok().body(responseBody);
@@ -91,11 +88,11 @@ public class AuthenticationHelper {
         return ResponseEntity.status(400).build();
     }
 
-    public JWTToken login(String url, String username, String password){
+    public JWTToken login(String username, String password){
         JWTToken jwtToken = new JWTToken();
         try {
             //create connection and set headers
-            URL obj = new URL(url);
+            URL obj = new URL(loginUrl);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 
 
@@ -131,9 +128,7 @@ public class AuthenticationHelper {
                 SystemMessage.errorMessage("Something went wrong while trying to log in");
             }
         } catch (IOException e){
-            if(stacktraceEnabled){
                 SystemMessage.exceptionMessage(e);
-            }
         }
         return jwtToken;
     }

@@ -5,21 +5,26 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class Logger {
+    public static boolean on = true;
     //the standard directory to log to is the working directory
     public static String logDir = System.getProperty("user.dir");
 
-    public static void log(String error){
-        File file = setSettings("error");
-        writeToLog(file, error);
-    }
-    public static void log(Exception e){
-        File file = setSettings("exception");
-        String exceptionstring = e.getClass().toString()+":";
-        for(StackTraceElement element: e.getStackTrace()){
-            exceptionstring += "\n\t\t\t"+element.toString();
+    public static void log(String error) {
+        if (on) {
+            File file = setSettings("error");
+            writeToLog(file, error);
         }
+    }
+    public static void log(Exception e) {
+        if (on) {
+            File file = setSettings("exception");
+            String exceptionstring = e.getClass().toString() + ":";
+            for (StackTraceElement element : e.getStackTrace()) {
+                exceptionstring += "\n\t\t\t" + element.toString();
+            }
 
-        writeToLog(file, exceptionstring);
+            writeToLog(file, exceptionstring);
+        }
     }
 
     private static File setSettings(String type){
