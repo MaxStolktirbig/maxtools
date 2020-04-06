@@ -7,14 +7,32 @@ import org.springframework.http.ResponseEntity;
 
 import java.io.*;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
 public class AuthenticationHelper {
+    public boolean stacktraceEnabled = false;
+
+    private boolean validateToken(JWTToken jwt, String url){
+        try{
+            URL obj = new URL(url);
+            HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+            con.setRequestProperty("Authorization", "Bearer " + jwt.getJwtToken());
+            if(con.getResponseCode() == 200){
+                return true;
+            }
+        }catch (IOException e){
+            SystemMessage.errorMessage("Malformed URL, check authentication url");
+            if(stacktraceEnabled){
+                SystemMessage.exceptionMessage(e);
+            }
+        }
+        return false;
+    }
 
 //    https://www.chillyfacts.com/java-send-http-getpost-request-and-read-json-response/
-
     public Map<String,Object> getClaimsFromToken(JWTToken jwt, String url){
         Map<String,Object> map = new HashMap<>();
         map.put("responseCode",null);
@@ -50,11 +68,15 @@ public class AuthenticationHelper {
     }
 
     public String getRole(JWTToken jwtToken, String url){
-        return (String) getClaimsFromToken(jwtToken, url).get("Role");
+        String role = null;
+        if(getClaimsFromToken(jwtToken, url).get("Role") != null){
+            role = (String) getClaimsFromToken(jwtToken, url).get("Role");
+        }
+        return role;
     }
 
     public ResponseEntity adminCheck(JWTToken jwtToken, String url, Object responseBody){
-        if(jwtToken.getJwtToken() != null) {
+        if(jwtToken.getJwtToken() != null && validateToken(jwtToken, url)) {
             String role = getRole(jwtToken, url);
             if(role != null) {
                 if (role.equals("admin")) {
