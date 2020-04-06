@@ -1,13 +1,12 @@
 package mx.helper.tools.IAC2020;
 
-import mx.helper.tools.SystemMessage;
+import mx.helper.tools.communication.SystemMessage;
 import mx.helper.tools.IAC2020.security.models.JWTToken;
 import org.json.JSONObject;
 import org.springframework.http.ResponseEntity;
 
 import java.io.*;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;

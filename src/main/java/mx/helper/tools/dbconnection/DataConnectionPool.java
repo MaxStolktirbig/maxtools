@@ -1,6 +1,6 @@
 package mx.helper.tools.dbconnection;
 
-import mx.helper.tools.SystemMessage;
+import mx.helper.tools.communication.SystemMessage;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -12,7 +12,9 @@ public class DataConnectionPool {
     private int INITIAL_POOL_SIZE = 10;
     private String driverName;
     private  Connection conn = null;
-    public boolean stacktraceEnabled = false;
+    private boolean stacktraceEnabled = false;
+
+
 
     public DataConnectionPool(String urlNoPrefix, String dbuserName, String dbpassword, ConnectionType connectionType, int INITIAL_POOL_SIZE){
         this.INITIAL_POOL_SIZE = INITIAL_POOL_SIZE;
@@ -45,9 +47,7 @@ public class DataConnectionPool {
             return pool;
         } catch (Exception e) {
             SystemMessage.errorMessage("Couldn't make a connection");
-            if(stacktraceEnabled){
-                SystemMessage.exceptionMessage(e);
-            }
+            SystemMessage.exceptionMessage(e);
             return null;
         }
     }
@@ -62,9 +62,7 @@ public class DataConnectionPool {
             }
         }catch (Exception e){
             SystemMessage.errorMessage("An error has occurred while trying to get a connection");
-            if(stacktraceEnabled){
-                SystemMessage.exceptionMessage(e);
-            }
+            SystemMessage.exceptionMessage(e);
         }
         return null;
     }
@@ -82,9 +80,8 @@ public class DataConnectionPool {
             }
         } catch (Exception e){
             SystemMessage.errorMessage("An error has occurred while trying to release a connection");
-            if(stacktraceEnabled){
-                SystemMessage.exceptionMessage(e);
-            }
+            SystemMessage.exceptionMessage(e);
+
         }
     }
 
@@ -96,9 +93,7 @@ public class DataConnectionPool {
             return resultSet;
         }
         catch (NullPointerException | SQLException e){
-            if(stacktraceEnabled){
-                SystemMessage.exceptionMessage(e);
-            }
+            SystemMessage.exceptionMessage(e);
             return resultSet;
         }
     }
@@ -108,9 +103,7 @@ public class DataConnectionPool {
             preparedStatement.execute();
             releaseConnection(connection);
         } catch (NullPointerException | SQLException e){
-            if(stacktraceEnabled){
                 SystemMessage.exceptionMessage(e);
-            }
         }
     }
 
@@ -124,9 +117,7 @@ public class DataConnectionPool {
             }
             return keys;
         }catch (NullPointerException|SQLException e){
-            if(stacktraceEnabled){
-                SystemMessage.exceptionMessage(e);
-            }
+            SystemMessage.exceptionMessage(e);
             return null;
         }
     }

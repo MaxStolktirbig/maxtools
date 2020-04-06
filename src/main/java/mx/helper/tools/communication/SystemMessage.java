@@ -1,4 +1,4 @@
-package mx.helper.tools;
+package mx.helper.tools.communication;
 
 public final class SystemMessage {
     private static final String ANSI_RESET = "\u001B[0m";
@@ -11,17 +11,32 @@ public final class SystemMessage {
     private static final String ANSI_CYAN = "\u001B[36m";
     private static final String ANSI_WHITE = "\u001B[37m";
 
+    private static boolean stacktraceEnabled = false;
+
+    public static void setStacktraceEnabled(boolean enabled){
+        if(enabled) {
+            SystemMessage.warningMessage("It is recommended to disable stacktrace for live builds");
+        }
+        stacktraceEnabled = enabled;
+    }
+
     public static void warningMessage(String message){
         System.out.println("["+ANSI_YELLOW+"WANRING"+ANSI_RESET+"] "+message);
     }
 
     public static void errorMessage(String message){
-        System.out.println("["+ANSI_RED+"ERROR"+ANSI_RESET+"] "+message);
+        String outMessage = ("["+ANSI_RED+"ERROR"+ANSI_RESET+"] "+message);
+        Logger.log(message);
+        System.out.println(outMessage);
     }
     public static void exceptionMessage(Exception e){
-        System.out.println("["+ANSI_RED+"STACKTRACE"+ANSI_RESET+"] ");
-        e.printStackTrace();
-        System.out.println("["+ANSI_RED+"STACKTRACE"+ANSI_RESET+"] ");
+        Logger.log(e);
+        if(stacktraceEnabled){
+            warningMessage("It is recommended to disable stacktrace for live environments");
+            System.out.println("[" + ANSI_RED + "STACKTRACE" + ANSI_RESET + "] ");
+            e.printStackTrace();
+            System.out.println("[" + ANSI_RED + "STACKTRACE" + ANSI_RESET + "] ");
+        }
     }
     public static void infoMessage(String message){
         System.out.println("["+ANSI_CYAN+"INFO"+ANSI_RESET+"] "+message);
