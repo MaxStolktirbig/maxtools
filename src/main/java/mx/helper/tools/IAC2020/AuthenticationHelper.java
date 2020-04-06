@@ -56,10 +56,12 @@ public class AuthenticationHelper {
     public ResponseEntity adminCheck(JWTToken jwtToken, String url, Object responseBody){
         if(jwtToken.getJwtToken() != null) {
             String role = getRole(jwtToken, url);
-            if (role.equals("admin")) {
-                return ResponseEntity.ok().body(responseBody);
-            } else {
-                return ResponseEntity.status(401).build();
+            if(role != null) {
+                if (role.equals("admin")) {
+                    return ResponseEntity.ok().body(responseBody);
+                } else {
+                    return ResponseEntity.status(401).build();
+                }
             }
         }
         return ResponseEntity.status(400).build();
