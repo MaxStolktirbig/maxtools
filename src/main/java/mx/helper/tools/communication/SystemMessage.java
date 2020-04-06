@@ -11,17 +11,11 @@ public final class SystemMessage {
     private static final String ANSI_CYAN = "\u001B[36m";
     private static final String ANSI_WHITE = "\u001B[37m";
 
-    private static boolean stacktraceEnabled = false;
+    public static boolean stacktraceEnabled = false;
 
-    public static void setStacktraceEnabled(boolean enabled){
-        if(enabled) {
-            SystemMessage.warningMessage("It is recommended to disable stacktrace for live builds");
-        }
-        stacktraceEnabled = enabled;
-    }
 
     public static void warningMessage(String message){
-        System.out.println("["+ANSI_YELLOW+"WANRING"+ANSI_RESET+"] "+message);
+        System.out.println("[-"+ANSI_YELLOW+"WARNING"+ANSI_RESET+"-] "+message);
     }
 
     public static void errorMessage(String message){
@@ -32,10 +26,15 @@ public final class SystemMessage {
     public static void exceptionMessage(Exception e){
         Logger.log(e);
         if(stacktraceEnabled){
-            warningMessage("It is recommended to disable stacktrace for live environments");
-            System.out.println("[" + ANSI_RED + "STACKTRACE" + ANSI_RESET + "] ");
-            e.printStackTrace();
-            System.out.println("[" + ANSI_RED + "STACKTRACE" + ANSI_RESET + "] ");
+            warningMessage("It is recommended to disable stacktrace for live environments, " +
+                    "you can always see the stacktrace in the logs");
+            System.out.println("[" + ANSI_RED + "STACKTRACE" + ANSI_RESET + "] "+e.getClass().toString()+":");
+            StackTraceElement[] stackTraceElements = e.getStackTrace();
+            for(StackTraceElement element: stackTraceElements){
+                System.out.println("[" + ANSI_RED + "STACKTRACE" + ANSI_RESET + "] \t\t"+element.toString());
+            }
+        } else {
+            errorMessage(e.getClass().getName());
         }
     }
     public static void infoMessage(String message){
@@ -46,7 +45,7 @@ public final class SystemMessage {
         System.out.println("["+ANSI_GREEN+"DONE"+ANSI_RESET+"]" + message);
     }
     public static void finishedTaskMessage(){
-        System.out.println("["+ANSI_GREEN+"DONE"+ANSI_RESET+"]");
+        finishedTaskMessage("");
     }
     public static void connectionMessage(String message){
         System.out.println("["+ANSI_PURPLE+"CONNECTION"+ANSI_RESET+"] "+message);

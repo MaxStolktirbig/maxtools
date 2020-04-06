@@ -14,7 +14,12 @@ public class Logger {
     }
     public static void log(Exception e){
         File file = setSettings("exception");
-        writeToLog(file, e.toString() );
+        String exceptionstring = e.getClass().toString()+":";
+        for(StackTraceElement element: e.getStackTrace()){
+            exceptionstring += "\n\t\t\t"+element.toString();
+        }
+
+        writeToLog(file, exceptionstring);
     }
 
     private static File setSettings(String type){
@@ -45,12 +50,18 @@ public class Logger {
 
     private static void writeToLog(File file, String appendText){
         try {
-            file.createNewFile();
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
             LocalDateTime now = LocalDateTime.now();
             String time = now.format(dtf);
 
-            appendText = "["+time+"]\n"+appendText+"\n\n\n";
+            boolean newFile = file.createNewFile();
+            appendText = "\n\n\n["+time+"]\n"+appendText+"\n\n\n";
+            for(int i = 0; i < 50; i++){
+                if(newFile){
+                   appendText = "="+appendText;
+                }
+                appendText = appendText+"=";
+            }
             FileOutputStream os = new FileOutputStream(file, true);
             os.write(appendText.getBytes(), 0, appendText.length());
             os.close();
@@ -59,7 +70,5 @@ public class Logger {
             System.out.println("Something went wrong trying to write to the log file");
         }
     }
-
-
 
 }

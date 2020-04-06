@@ -13,6 +13,7 @@ import java.util.Map;
 
 public class AuthenticationHelper {
     public boolean stacktraceEnabled = false;
+    public String authUrl;
 
     public boolean validateToken(JWTToken jwt, String url){
         try{
