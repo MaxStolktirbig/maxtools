@@ -15,7 +15,7 @@ import java.util.Map;
 public class AuthenticationHelper {
     public boolean stacktraceEnabled = false;
 
-    private boolean validateToken(JWTToken jwt, String url){
+    public boolean validateToken(JWTToken jwt, String url){
         try{
             URL obj = new URL(url);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
