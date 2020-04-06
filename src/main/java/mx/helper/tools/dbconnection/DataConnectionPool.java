@@ -7,21 +7,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DataConnectionPool {
+    public static String urlNoPrefix;
+    public static String dbUsername;
+    public static String dbPassword;
+    public static ConnectionType connectionType;
     private static List<Connection> openConnections;
     private static List<Connection> usedConnections = new ArrayList<>();
     private int INITIAL_POOL_SIZE = 10;
     private String driverName;
     private  Connection conn = null;
-    private boolean stacktraceEnabled = false;
 
 
 
-    public DataConnectionPool(String urlNoPrefix, String dbuserName, String dbpassword, ConnectionType connectionType, int INITIAL_POOL_SIZE){
+    public DataConnectionPool(int INITIAL_POOL_SIZE){
         this.INITIAL_POOL_SIZE = INITIAL_POOL_SIZE;
-        openConnections = createConnection(urlNoPrefix, dbuserName, dbpassword, connectionType);
+        openConnections = createConnection(urlNoPrefix, dbUsername, dbPassword, connectionType);
     }
-    public DataConnectionPool(String urlNoPrefix, String dbuserName, String dbpassword, ConnectionType connectionType){
-        openConnections = createConnection(urlNoPrefix, dbuserName, dbpassword, connectionType);
+    public DataConnectionPool(){
+        openConnections = createConnection(urlNoPrefix, dbUsername, dbPassword, connectionType);
     }
 
     private List<Connection> createConnection(String urlNoPrefix, String user, String password, ConnectionType connectionType) {
