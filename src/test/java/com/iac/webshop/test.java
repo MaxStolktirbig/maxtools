@@ -12,7 +12,7 @@ public class test {
     private static String loginUrl = "http://localhost:8089/authService/login/";
 
     public static void main(String[] args){
-        Logger.log("logging test!",   System.getProperty("user.dir"));
-        Logger.log(new Exception("test"),   System.getProperty("user.dir"));
+        SystemMessage.errorMessage("message");
+        SystemMessage.exceptionMessage(new NullPointerException("\n\tline 16 at test"));
     }
 }
