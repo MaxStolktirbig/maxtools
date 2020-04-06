@@ -62,7 +62,9 @@ public class AuthenticationHelper {
             map.put("Role",myResponse.get("Role"));
             return map;
         }catch (IOException e){
-            SystemMessage.exceptionMessage(e);
+            if(stacktraceEnabled){
+                SystemMessage.exceptionMessage(e);
+            }
             return map;
         }
     }
@@ -129,7 +131,9 @@ public class AuthenticationHelper {
                 SystemMessage.errorMessage("Something went wrong while trying to log in");
             }
         } catch (IOException e){
-            SystemMessage.exceptionMessage(e);
+            if(stacktraceEnabled){
+                SystemMessage.exceptionMessage(e);
+            }
         }
         return jwtToken;
     }
