@@ -89,18 +89,15 @@ public class AuthenticationHelper {
     }
 
     public JWTToken login(String username, String password){
-        JWTToken jwtToken = new JWTToken();
+        JWTToken jwtToken = null;
         try {
             //create connection and set headers
             URL obj = new URL(loginUrl);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-
-
             con.setRequestMethod("POST");
             con.setRequestProperty("Content-Type", "application/json; utf-8");
             con.setRequestProperty("Accept", "application/json");
             con.setDoOutput(true);
-
             //write body
             String jsonInputString = "{ \"username\":\""+username+"\", \"password\":\""+password+"\"}";
             con.setRequestProperty("Body", jsonInputString);
@@ -119,8 +116,8 @@ public class AuthenticationHelper {
                     result2 = bis.read();
                 }
                 result = buf.toString();
-
                 JSONObject jsonObject = new JSONObject(result);
+                jwtToken = new JWTToken();
                 jwtToken.setJwtToken(jsonObject.getString("jwt"));
             } else if (con.getResponseCode() == 400){
                 SystemMessage.errorMessage("User name/password combination not found");
