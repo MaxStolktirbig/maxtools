@@ -1,13 +1,27 @@
 package mx.helper.tools.communication;
 
+import mx.helper.tools.IAC2020.AuthenticationHelper;
+
 import java.io.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class Logger {
-    public static boolean on = true;
+    private static boolean on = true;
     //the standard directory to log to is the working directory
     public static String logDir = System.getProperty("user.dir");
+
+    public static void on(){
+        on = true;
+    }
+
+    public static void off(){
+        if(!SystemMessage.stacktraceEnabled){
+            SystemMessage.warningMessage("Logging is off; enabeling stacktrace");
+            SystemMessage.stacktraceOn();
+        }
+        on = false;
+    }
 
     public static void log(String error) {
         if (on) {
@@ -18,11 +32,10 @@ public class Logger {
     public static void log(Exception e) {
         if (on) {
             File file = setSettings("exception");
-            String exceptionstring = e.getClass().toString() + ":";
+            String exceptionstring = e.getClass().toString() + " at line: "+e.getStackTrace()[0].getLineNumber();
             for (StackTraceElement element : e.getStackTrace()) {
                 exceptionstring += "\n\t\t\t" + element.toString();
             }
-
             writeToLog(file, exceptionstring);
         }
     }

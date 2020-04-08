@@ -16,7 +16,7 @@ public class AuthenticationHelper {
     public static String loginUrl;
     public static String validateUrl;
 
-    public boolean validateToken(JWTToken jwt){
+    public static boolean validateToken(JWTToken jwt){
         try{
             URL obj = new URL(validateUrl);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
@@ -32,7 +32,7 @@ public class AuthenticationHelper {
     }
 
 //    https://www.chillyfacts.com/java-send-http-getpost-request-and-read-json-response/
-    public Map<String,Object> getClaimsFromToken(JWTToken jwt){
+    public static Map<String,Object> getClaimsFromToken(JWTToken jwt){
         Map<String,Object> map = new HashMap<>();
         map.put("responseCode",null);
         try{
@@ -66,7 +66,7 @@ public class AuthenticationHelper {
         }
     }
 
-    public String getRole(JWTToken jwtToken){
+    public static String getRole(JWTToken jwtToken){
         String role = null;
         if(getClaimsFromToken(jwtToken).get("Role") != null){
             role = (String) getClaimsFromToken(jwtToken).get("Role");
@@ -74,7 +74,7 @@ public class AuthenticationHelper {
         return role;
     }
 
-    public ResponseEntity adminCheck(JWTToken jwtToken, String responseBody){
+    public static ResponseEntity adminCheck(JWTToken jwtToken, String responseBody){
         if(jwtToken.getJwtToken() != null && validateToken(jwtToken)) {
             String role = getRole(jwtToken);
             if(role != null) {
@@ -88,7 +88,7 @@ public class AuthenticationHelper {
         return ResponseEntity.status(400).build();
     }
 
-    public JWTToken login(String username, String password){
+    public static JWTToken login(String username, String password){
         JWTToken jwtToken = null;
         try {
             //create connection and set headers
@@ -100,7 +100,6 @@ public class AuthenticationHelper {
             con.setDoOutput(true);
             //write body
             String jsonInputString = "{ \"username\":\""+username+"\", \"password\":\""+password+"\"}";
-            con.setRequestProperty("Body", jsonInputString);
             OutputStream outputStream = con.getOutputStream();
             byte[] input = jsonInputString.getBytes("utf-8");
             outputStream.write(input);

@@ -1,6 +1,7 @@
 package mx.helper.tools.communication;
 
 public final class SystemMessage {
+    //https://stackoverflow.com/questions/5762491/how-to-print-color-in-console-using-system-out-println
     private static final String ANSI_RESET = "\u001B[0m";
     private static final String ANSI_BLACK = "\u001B[30m";
     private static final String ANSI_RED = "\u001B[31m";
@@ -11,8 +12,15 @@ public final class SystemMessage {
     private static final String ANSI_CYAN = "\u001B[36m";
     private static final String ANSI_WHITE = "\u001B[37m";
 
-    public static boolean stacktraceEnabled = false;
+    static boolean stacktraceEnabled = false;
 
+    public static void stacktraceOn(){
+        stacktraceEnabled = true;
+    }
+
+    public static void stacktraceOff(){
+        stacktraceEnabled = false;
+    }
 
     public static void warningMessage(String message){
         System.out.println("[-"+ANSI_YELLOW+"WARNING"+ANSI_RESET+"-] "+message);
@@ -26,13 +34,13 @@ public final class SystemMessage {
     public static void exceptionMessage(Exception e){
         Logger.log(e);
         if(stacktraceEnabled){
-            warningMessage("It is recommended to disable stacktrace for live environments, " +
-                    "you can always see the stacktrace in the logs");
+            warningMessage("It is recommended to disable stacktrace for live environments.");
             System.out.println("[" + ANSI_RED + "STACKTRACE" + ANSI_RESET + "] "+e.getClass().toString()+": "+e.getMessage());
             StackTraceElement[] stackTraceElements = e.getStackTrace();
             for(StackTraceElement element: stackTraceElements){
-                System.out.println("[" + ANSI_RED + "STACKTRACE" + ANSI_RESET + "] \t\t"+element.toString());
+                System.out.println("[" + ANSI_RED + "STACKTRACE" + ANSI_RESET + "] \t\t"+ANSI_RED +element.toString()+ ANSI_RESET);
             }
+            System.out.println("\n");
         } else {
             errorMessage(e.getClass().getName());
         }
@@ -42,7 +50,7 @@ public final class SystemMessage {
     }
 
     public static void finishedTaskMessage(String message){
-        System.out.println("["+ANSI_GREEN+"DONE"+ANSI_RESET+"]" + message);
+        System.out.println("["+ANSI_GREEN+"DONE"+ANSI_RESET+"] " + message);
     }
     public static void finishedTaskMessage(){
         finishedTaskMessage("");
