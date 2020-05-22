@@ -1,4 +1,4 @@
-package mx.helper.tools.IAC2020.security.models;
+package mx.helper.tools.security.models;
 
 public class JsonResponse {
     private String responseString;

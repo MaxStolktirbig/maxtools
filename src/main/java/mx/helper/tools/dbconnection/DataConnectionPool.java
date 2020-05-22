@@ -4,9 +4,12 @@ import mx.helper.tools.communication.SystemMessage;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class DataConnectionPool {
+    private static String standardUrlVar = "?useUnicode=true&useJDBCCompliantTimezoneShift=true" +
+            "&useLegacyDatetimeCode=false&serverTimezone=UTC";
     public static String urlNoPrefix;
     public static String dbUsername;
     public static String dbPassword;
@@ -27,11 +30,27 @@ public class DataConnectionPool {
         openConnections = createConnection(urlNoPrefix, dbUsername, dbPassword, connectionType);
     }
 
+    public ResultSet prepareStatementExecute(String sql, HashMap<Integer, Object > statementMap){
+        try {
+            Connection connection = getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            HashMap<Integer, Object> preparedMap = new HashMap<>();
+            for (Integer key: statementMap.keySet()){
+                System.out.println(statementMap.get(key).getClass());
+            }
+            return executeQuery(preparedStatement, connection);
+        }catch (SQLException exception){
+            SystemMessage.exceptionMessage(exception);
+            return null;
+        }
+    }
+
+
     private List<Connection> createConnection(String urlNoPrefix, String user, String password, ConnectionType connectionType) {
         List<Connection> pool = new ArrayList<>(INITIAL_POOL_SIZE);
         try {
             String baseUrl = urlNoPrefix;
-            String url = setDriverName(connectionType)+ baseUrl;
+            String url = setDriverName(connectionType)+ baseUrl +standardUrlVar;
             //mysql database connectivity
             Class.forName(driverName);
             long totaltime = System.currentTimeMillis();

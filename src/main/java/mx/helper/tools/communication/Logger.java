@@ -1,7 +1,5 @@
 package mx.helper.tools.communication;
 
-import mx.helper.tools.IAC2020.AuthenticationHelper;
-
 import java.io.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

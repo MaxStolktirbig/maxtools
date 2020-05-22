@@ -1,7 +1,7 @@
-package mx.helper.tools.IAC2020;
+package mx.helper.tools.security;
 
 import mx.helper.tools.communication.SystemMessage;
-import mx.helper.tools.IAC2020.security.models.JWTToken;
+import mx.helper.tools.security.models.JWTToken;
 import org.json.JSONObject;
 import org.springframework.http.ResponseEntity;
 
